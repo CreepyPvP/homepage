@@ -1,0 +1,9 @@
+body {
+    background: black;
+    overflow: hidden;
+}
+
+.xterm-viewport {
+    overflow: hidden;
+    overflow-y: hidden !important;
+}
