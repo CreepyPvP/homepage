@@ -53,8 +53,16 @@ export class TerminalInstance {
             }
         });
 
-        this.term.write("Hi, Im Luis");
-        this.term.write("Iam a 18 year old hobby developer with a passion for computers, physics and maths")
+        this.term.writeln("Hi, Im Luis");
+        this.term.writeln("Iam a 18 year old hobby developer with a passion for computers, physics and maths");
+        this.term.writeln("Typescript and Neovim rule");
+        this.term.writeln("Unity is despicable");
+        this.term.writeln("I'll document nteresting stuff I learn during my projects here");
+        this.term.writeln("Take a look :)");
+
+        this.term.writeln("");
+        this.term.writeln("Type '?' for a list of commands")
+
         this.prompt();
     }
 
