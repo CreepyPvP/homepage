@@ -1,4 +1,5 @@
 import { Terminal } from "xterm";
+import { COLOR_CYAN, COLOR_GREEN, COLOR_MAGENTA, COLOR_RESET, COLOR_YELLOW } from "./Color";
 import { FileItem } from "./FileItem";
 
 
@@ -43,7 +44,7 @@ export class TerminalInstance {
                 case '\u007F':                              // Backspace
                     if(this.command.length < 1) break;
                     this.term.write('\b \b');
-                    this.command = this.command.substring(1);
+                    this.command = this.command.slice(0, this.command.length - 1);
                     break;
                 default:
                     if (e >= String.fromCharCode(0x20) && e <= String.fromCharCode(0x7E) || e >= '\u00a0') {
@@ -53,15 +54,14 @@ export class TerminalInstance {
             }
         });
 
-        this.term.writeln("Hi, Im Luis");
-        this.term.writeln("Iam a 18 year old hobby developer with a passion for computers, physics and maths");
+        this.term.writeln("Hi, " + COLOR_YELLOW + "Im Luis" + COLOR_RESET);
+        this.term.writeln("Iam a 18 year old hobby developer with a passion " + COLOR_YELLOW + "computers, physics and maths" + COLOR_RESET);
         this.term.writeln("Typescript and Neovim rule");
-        this.term.writeln("Unity is despicable");
         this.term.writeln("I'll document nteresting stuff I learn during my projects here");
         this.term.writeln("Take a look :)");
 
         this.term.writeln("");
-        this.term.writeln("Type '?' for a list of commands")
+        this.term.writeln("Type '" + COLOR_CYAN + "?" + COLOR_RESET + "' for a list of commands")
 
         this.prompt();
     }
@@ -83,7 +83,7 @@ export class TerminalInstance {
     }
 
     prompt() {
-        this.term.write("\r\n" + this.currentFile.getAbsolutePath() + "$ ")
+        this.term.write("\r\n" + COLOR_GREEN + this.currentFile.getAbsolutePath() + COLOR_RESET + "$ ")
         this.command = "";
     }
 

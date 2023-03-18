@@ -6,6 +6,7 @@ import "./index.css"
 import {TerminalInstance} from "./TerminalInstance"
 import { FileItem } from "./FileItem"
 import {StringContent} from "./FileContent"
+import { COLOR_CYAN, COLOR_RED, COLOR_RESET } from "./Color"
 
 const root = new FileItem("home", true);
 const folder1 = new FileItem("aFolder", true);
@@ -16,14 +17,14 @@ root.add(file);
 const instance = new TerminalInstance(root);
 
 instance.setNotFound((args, term) => {
-    term.write("Unkown command '" + args[0] + "'. Type '?' for help");
+    term.writeln(COLOR_RED + "Unkown command '" + args[0] + "'. Type '?' for help" + COLOR_RESET);
     return -1;
 })
 
 instance.register("?", (args, term) => {
-    term.writeln("- 'ls' lists the content of the current directory");
-    term.writeln("- 'cat xyz.txt' prints the content of file 'xyz.txt'");
-    term.writeln("- 'cd xyz' nagviates to directoy 'xyz'");
+    term.writeln("- '" + COLOR_CYAN + "ls" + COLOR_RESET + "' lists the content of the current directory");
+    term.writeln("- '" + COLOR_CYAN + "cat xyz.txt" + COLOR_RESET + "' prints the content of file 'xyz.txt'");
+    term.writeln("- '" + COLOR_CYAN + "cd xyz" + COLOR_RESET + "' nagviates to directoy 'xyz'");
     return 0;
 })
 
@@ -39,14 +40,14 @@ instance.register("ls", (args, term, context) => {
 
 instance.register("cat", (args, term, context) => {
     if(args.length !== 2) {
-        term.writeln("Invalid number of arguments provided");
+        term.writeln(COLOR_RED + "Invalid number of arguments provided" + COLOR_RESET);
         return -1;
     }
 
     const targetFile = context.folder.getChildren().find(item => item.getName() === args[1] && !item.isDirectory());
 
     if(!targetFile) {
-        term.writeln("Invalid file '" + args[1] + "'");
+        term.writeln(COLOR_RED + "Invalid file '" + args[1] + "'" + COLOR_RESET);
         return -1;
     }
 
@@ -57,7 +58,7 @@ instance.register("cat", (args, term, context) => {
 
 instance.register("cd", (args, term, context) => {
     if(args.length !== 2) {
-        term.writeln("Invalid number of argnuments provided");
+        term.writeln(COLOR_RED + "Invalid number of argnuments provided" + COLOR_RESET);
         return -1;
     }
 
@@ -72,7 +73,7 @@ instance.register("cd", (args, term, context) => {
 
     const targetDir = context.folder.getChildren().find(child => child.getName() === args[1] && child.isDirectory());
     if(!targetDir) {
-        term.writeln("Invalid directory '" + args[1] + "'");
+        term.writeln(COLOR_RED + "Invalid directory '" + args[1] + "'" + COLOR_RESET);
         return -1;
     }
 
